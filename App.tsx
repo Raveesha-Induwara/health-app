@@ -1,112 +1,168 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './global.css';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import {LogBox, Platform, StatusBar} from 'react-native';
+import {useColorScheme} from 'nativewind';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {ButtonProps, createTheme, ThemeProvider} from '@rneui/themed';
+import {RootNavigator} from './src/navigation/RootNavigator';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+export const FONT_FAMILY = 'Poppins';
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
-
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-}
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+const theme = createTheme({
+  lightColors: {
+    primary: '#0070FF',
+    secondary: '#263446',
+    grey0: '#788AA5',
+    white: '#FFFFFF',
+    black: '#000',
+    error: '#C62B3B',
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  darkColors: {
+    primary: '#001899',
+    secondary: '#263446',
+    grey0: '#788AA5',
+    error: '#C62B3B',
+    black: '#000',
+    white: '#FFFFFF',
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
+  mode: 'light',
+  components: {
+    Button: (
+      props: ButtonProps & {
+        white?: boolean;
+        error?: boolean;
+        secondary?: boolean;
+        default?: boolean;
+        secondaryTextColor?: string;
+      },
+      themeColor,
+    ) => ({
+      titleStyle: {
+        paddingHorizontal: 5,
+        fontFamily: FONT_FAMILY,
+        fontWeight: '500',
+        lineHeight: 25,
+        color: props.secondary
+          ? props.secondaryTextColor || themeColor.colors.white
+          : props.white
+          ? themeColor.colors.secondary
+          : props.error
+          ? themeColor.colors.white
+          : themeColor.colors.white,
+        fontSize: props.size === 'sm' ? 14 : 18,
+        marginTop: Platform.OS === 'ios' ? 3 : 0,
+      },
+      buttonStyle: {
+        borderRadius: 5,
+        borderWidth: 0,
+        borderColor: themeColor.colors.secondary,
+        backgroundColor: props.secondary
+          ? themeColor.colors.secondary
+          : props.error
+          ? themeColor.colors.error
+          : props.white
+          ? themeColor.colors.white
+          : themeColor.colors.secondary,
+      },
+    }),
+    ButtonGroup: {
+      textStyle: {fontFamily: FONT_FAMILY},
+      buttonStyle: {
+        borderRadius: 8,
+      },
+      containerStyle: {
+        borderWidth: 0,
+        backgroundColor: 'transparent',
+      },
+      innerBorderStyle: {color: 'transparent'},
+    },
+    Input: {
+      style: {
+        fontFamily: FONT_FAMILY,
+        paddingHorizontal: 6,
+        marginBottom: Platform.OS === 'ios' ? 10 : 0,
+      },
+      labelStyle: {
+        fontFamily: FONT_FAMILY,
+        color: '#000',
+      },
+      errorStyle: {
+        fontSize: 16,
+      },
+    },
+    Text: {
+      style: {
+        fontSize: 16,
+        lineHeight: 24,
+        fontFamily: FONT_FAMILY,
+      },
+      h1Style: {
+        lineHeight: 60,
+        fontFamily: FONT_FAMILY,
+      },
+      h2Style: {
+        lineHeight: 51,
+        fontFamily: FONT_FAMILY,
+      },
+      h3Style: {
+        lineHeight: 42,
+        fontFamily: FONT_FAMILY,
+      },
+      h4Style: {
+        lineHeight: 33,
+        fontFamily: FONT_FAMILY,
+      },
+    },
+    Icon: {
+      iconStyle: {
+        alignSelf: 'flex-start',
+      },
+    },
+    ListItem: {
+      containerStyle: {
+        backgroundColor: '#2C2C2E',
+        borderRadius: 15,
+      },
+    },
+    ListItemTitle: {
+      style: {
+        fontFamily: FONT_FAMILY,
+      },
+    },
+    CheckBox: {
+      fontFamily: FONT_FAMILY,
+      textStyle: {
+        fontWeight: '500',
+        lineHeight: 18,
+      },
+      containerStyle: {
+        backgroundColor: 'transparent',
+      },
+    },
   },
 });
+
+function App(): React.JSX.Element {
+  LogBox.ignoreAllLogs();
+  const {colorScheme, setColorScheme} = useColorScheme();
+
+  useEffect(() => {
+    StatusBar.setBarStyle(
+      colorScheme === 'light' ? 'dark-content' : 'light-content',
+    );
+    if (Platform.OS === 'android') {
+      StatusBar.setBackgroundColor(colorScheme === 'light' ? '#fff' : '#000');
+      StatusBar.setTranslucent(true);
+    }
+  }, [colorScheme]);
+
+  return (
+    <ThemeProvider theme={theme}>
+      <SafeAreaProvider>
+        <RootNavigator />
+      </SafeAreaProvider>
+    </ThemeProvider>
+  );
+}
 
 export default App;

@@ -2,6 +2,30 @@
 module.exports = {
   content: ['./App.{js,jsx,ts,tsx}', './src/**/*.{js,jsx,ts,tsx}'],
   presets: [require('nativewind/preset')],
-  theme: {},
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          DEFAULT: '#0070FF',
+        },
+        dark: {
+          DEFAULT: '#263446',
+        },
+        gray: {
+          DEFAULT: '#788AA5',
+        },
+        white: {
+          DEFAULT: '#FFFFFF',
+        },
+      },
+      flex: {
+        0.2: '0.2',
+        0.3: '0.3',
+        0.5: '0.5',
+        0.7: '0.7',
+        0.9: '0.9',
+      },
+    },
+  },
   plugins: [],
 };
