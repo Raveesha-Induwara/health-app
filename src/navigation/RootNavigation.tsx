@@ -4,6 +4,7 @@ import {RouteProp, useNavigation} from '@react-navigation/native';
 export type RootStackParamList = {
   Test: undefined;
   Splash: undefined;
+  Onboarding: undefined;
 };
 
 export type NavigationHookType = NativeStackNavigationProp<RootStackParamList>;

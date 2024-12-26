@@ -6,6 +6,7 @@ import {Colors} from '../utils/Colors';
 
 import {TestScreen} from '../screens/test/TestScreen';
 import {SplashScreen} from '../screens/splash/SplashScreen';
+import {OnboardingScreen} from '../screens/splash/OnBoardingScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -38,6 +39,13 @@ export const RootNavigator: React.FC = () => {
         <Stack.Screen
           name="Splash"
           component={SplashScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Onboarding"
+          component={OnboardingScreen}
           options={{
             headerShown: false,
           }}
