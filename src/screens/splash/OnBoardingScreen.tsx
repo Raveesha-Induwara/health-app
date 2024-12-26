@@ -78,7 +78,7 @@ const Dots = ({selected}: any) => {
   return (
     <View
       className={classNames('h-2 w-2 mx-1 rounded-full bg-gray', {
-        'bg-dark': selected,
+        'bg-black': selected,
       })}
     />
   );
@@ -113,18 +113,18 @@ export const OnboardingScreen = () => {
               style={styles.ImageStyles}
             />
           ),
-          title: 'Consult with trusted doctors',
+          title: 'Find multiple specialist in one place',
           subtitle: 'Are you struggling with the finding trusted doctors?',
         },
         {
           backgroundColor: Colors.White,
           image: (
             <Image
-              source={require('../../assets/app-images/lady-doctor.png')}
-              style={styles.ImageStyles}
+              source={require('../../assets/app-images/doctor.png')}
+              style={(styles.ImageStyles, {marginTop: 0})}
             />
           ),
-          title: 'Find multiple specialist in one place',
+          title: 'Consult with trusted doctors',
           subtitle:
             'Our platform is designed to provide all details about the doctors.',
         },
@@ -132,7 +132,7 @@ export const OnboardingScreen = () => {
           backgroundColor: Colors.White,
           image: (
             <Image
-              source={require('../../assets/app-images/online-consulting.png')}
+              source={require('../../assets/app-images/lady-doctor2.png')}
               style={styles.ImageStyles}
             />
           ),
@@ -152,8 +152,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.White,
   },
   ImageStyles: {
-    width: RPW(85),
-    height: RPH(60),
+    width: RPW(70),
+    height: RPH(50),
     resizeMode: 'contain',
   },
   TitleStyles: {

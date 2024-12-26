@@ -8,13 +8,15 @@ import LottieView from 'lottie-react-native';
 export const SplashScreen: Screen<'Splash'> = () => {
   const navigation = useNav();
   const user = useUser();
+
   useEffect(() => {
     if (user) {
-      navigation.navigate('Onborde');
+      navigation.navigate('Onboarding');
     } else {
-      navigation.navigate('Onborde');
+      navigation.navigate('Onboarding');
     }
   }, [navigation, user]);
+
   // Get screen dimension
   const screenWidth = Dimensions.get('window').width;
   const screenHeight = Dimensions.get('window').height;
