@@ -1,10 +1,12 @@
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import './global.css';
 import {LogBox, Platform, StatusBar} from 'react-native';
 import {useColorScheme} from 'nativewind';
+import {API_BASE, LOG_NETWORK} from '@env';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {ButtonProps, createTheme, ThemeProvider} from '@rneui/themed';
 import {RootNavigator} from './src/navigation/RootNavigator';
+import {ConnectionProvider} from '@sezenta/react-native-connection';
 
 export const FONT_FAMILY = 'Poppins';
 
@@ -29,10 +31,10 @@ const theme = createTheme({
   components: {
     Button: (
       props: ButtonProps & {
+        primary?: boolean;
+        secondary?: boolean;
         white?: boolean;
         error?: boolean;
-        secondary?: boolean;
-        default?: boolean;
         secondaryTextColor?: string;
       },
       themeColor,
@@ -54,15 +56,15 @@ const theme = createTheme({
       },
       buttonStyle: {
         borderRadius: 5,
-        borderWidth: 0,
-        borderColor: themeColor.colors.secondary,
+        borderWidth: 1,
+        borderColor: themeColor.colors.primary,
         backgroundColor: props.secondary
           ? themeColor.colors.secondary
           : props.error
           ? themeColor.colors.error
           : props.white
           ? themeColor.colors.white
-          : themeColor.colors.secondary,
+          : themeColor.colors.primary,
       },
     }),
     ButtonGroup: {
@@ -156,12 +158,20 @@ function App(): React.JSX.Element {
     }
   }, [colorScheme]);
 
+  const userIdProvider = useCallback((u: any) => 'default', []);
+
   return (
-    <ThemeProvider theme={theme}>
-      <SafeAreaProvider>
-        <RootNavigator />
-      </SafeAreaProvider>
-    </ThemeProvider>
+    <ConnectionProvider
+      baseUrl={API_BASE}
+      profile="default"
+      userId={userIdProvider}
+      logEnabled={LOG_NETWORK === 'true'}>
+      <ThemeProvider theme={theme}>
+        <SafeAreaProvider>
+          <RootNavigator />
+        </SafeAreaProvider>
+      </ThemeProvider>
+    </ConnectionProvider>
   );
 }
 
