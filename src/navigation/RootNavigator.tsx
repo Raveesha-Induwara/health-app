@@ -7,6 +7,9 @@ import {Colors} from '../utils/Colors';
 import {TestScreen} from '../screens/test/TestScreen';
 import {SplashScreen} from '../screens/splash/SplashScreen';
 import {OnboardingScreen} from '../screens/splash/OnBoardingScreen';
+import {WelcomeScreen} from '../screens/welcome/WelcomeScreen';
+import {SignInScreen} from '../screens/signin/SignInScreen';
+import {SignUpScreen} from '../screens/signup/SignUpScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -14,7 +17,7 @@ export const RootNavigator: React.FC = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Splash"
+        initialRouteName="Welcome"
         screenOptions={{
           headerShown: true,
           headerStyle: {
@@ -46,6 +49,27 @@ export const RootNavigator: React.FC = () => {
         <Stack.Screen
           name="Onboarding"
           component={OnboardingScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Welcome"
+          component={WelcomeScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="SignIn"
+          component={SignInScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="SignUp"
+          component={SignUpScreen}
           options={{
             headerShown: false,
           }}

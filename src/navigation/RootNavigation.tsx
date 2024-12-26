@@ -5,6 +5,9 @@ export type RootStackParamList = {
   Test: undefined;
   Splash: undefined;
   Onboarding: undefined;
+  Welcome: undefined;
+  SignIn: undefined;
+  SignUp: undefined;
 };
 
 export type NavigationHookType = NativeStackNavigationProp<RootStackParamList>;
