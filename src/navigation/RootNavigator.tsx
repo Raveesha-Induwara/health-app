@@ -5,6 +5,7 @@ import {RootStackParamList} from './RootNavigation';
 import {Colors} from '../utils/Colors';
 
 import {TestScreen} from '../screens/test/TestScreen';
+import {SplashScreen} from '../screens/splash/SplashScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -12,7 +13,7 @@ export const RootNavigator: React.FC = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Test"
+        initialRouteName="Splash"
         screenOptions={{
           headerShown: true,
           headerStyle: {
@@ -27,7 +28,20 @@ export const RootNavigator: React.FC = () => {
           // statusBarColor: Colors.PrimaryWhite,
           // statusBarStyle: 'dark',
         }}>
-        <Stack.Screen name="Test" component={TestScreen} />
+        <Stack.Screen
+          name="Test"
+          component={TestScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Splash"
+          component={SplashScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

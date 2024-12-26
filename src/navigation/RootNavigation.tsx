@@ -3,6 +3,7 @@ import {FC, PropsWithChildren} from 'react';
 import {RouteProp, useNavigation} from '@react-navigation/native';
 export type RootStackParamList = {
   Test: undefined;
+  Splash: undefined;
 };
 
 export type NavigationHookType = NativeStackNavigationProp<RootStackParamList>;
