@@ -17,6 +17,9 @@ module.exports = {
         white: {
           DEFAULT: '#FFFFFF',
         },
+        lightGrey: {
+          DEFAULT: '#EFEFFA',
+        },
       },
       flex: {
         0.2: '0.2',
