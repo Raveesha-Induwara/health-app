@@ -4,12 +4,12 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {RootStackParamList} from './RootNavigation';
 import {Colors} from '../utils/Colors';
 
-import {TestScreen} from '../screens/test/TestScreen';
 import {SplashScreen} from '../screens/splash/SplashScreen';
 import {OnboardingScreen} from '../screens/splash/OnBoardingScreen';
 import {WelcomeScreen} from '../screens/welcome/WelcomeScreen';
 import {SignInScreen} from '../screens/signin/SignInScreen';
 import {SignUpScreen} from '../screens/signup/SignUpScreen';
+import {HomeScreen} from '../screens/home/HomeScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -17,7 +17,7 @@ export const RootNavigator: React.FC = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Welcome"
+        initialRouteName="Home"
         screenOptions={{
           headerShown: true,
           headerStyle: {
@@ -32,13 +32,6 @@ export const RootNavigator: React.FC = () => {
           // statusBarColor: Colors.PrimaryWhite,
           // statusBarStyle: 'dark',
         }}>
-        <Stack.Screen
-          name="Test"
-          component={TestScreen}
-          options={{
-            headerShown: false,
-          }}
-        />
         <Stack.Screen
           name="Splash"
           component={SplashScreen}
@@ -70,6 +63,13 @@ export const RootNavigator: React.FC = () => {
         <Stack.Screen
           name="SignUp"
           component={SignUpScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
           options={{
             headerShown: false,
           }}

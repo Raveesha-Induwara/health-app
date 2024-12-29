@@ -2,12 +2,12 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {FC, PropsWithChildren} from 'react';
 import {RouteProp, useNavigation} from '@react-navigation/native';
 export type RootStackParamList = {
-  Test: undefined;
   Splash: undefined;
   Onboarding: undefined;
   Welcome: undefined;
   SignIn: undefined;
   SignUp: undefined;
+  Home: undefined;
 };
 
 export type NavigationHookType = NativeStackNavigationProp<RootStackParamList>;
