@@ -40,6 +40,7 @@ export const SignUpScreen: Screen<'SignUp'> = () => {
 
   const submit = (data: any) => {
     Alert.alert('Form Data', JSON.stringify(data));
+    navigation.navigate('Home');
   };
 
   return (
