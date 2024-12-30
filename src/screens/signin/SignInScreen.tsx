@@ -15,6 +15,13 @@ import {Button} from '../../components/rneui';
 import {useNav} from '../../navigation/RootNavigation';
 import {Colors} from '../../utils/Colors.ts';
 import {useForm, Controller} from 'react-hook-form';
+import {useSelector} from 'react-redux';
+import {RootState} from '../../utils/state/store.ts';
+
+interface SignInData {
+  email: string;
+  password: string;
+}
 
 // Get screen dimension
 const screenWidth = Dimensions.get('window').width;
@@ -30,16 +37,23 @@ const RPH = (percentage: number) => {
 
 export const SignInScreen = () => {
   const navigation = useNav();
+  const user = useSelector((state: RootState) => state.user.user);
   const [loading, setLoading] = useState<boolean>(false);
   const {
     control,
     handleSubmit,
     formState: {errors},
-  } = useForm();
+  } = useForm<SignInData>();
 
-  const submit = (data: any) => {
-    Alert.alert('Form Data', JSON.stringify(data));
-    navigation.navigate('Home');
+  const submit = (data: SignInData) => {
+    if (data.email === user.email && data.password === user.password) {
+      Alert.alert('Success', 'You are logged in!');
+      navigation.navigate('Home');
+    } else if (data.email !== user.email) {
+      Alert.alert('Login Failed', 'User not found!');
+    } else {
+      Alert.alert('Login Failed', 'Incorrect password!');
+    }
   };
 
   return (
@@ -95,6 +109,7 @@ export const SignInScreen = () => {
               render={({field: {onChange, onBlur, value}}) => (
                 <TextInput
                   placeholder="Enter your password"
+                  secureTextEntry={true}
                   style={styles.input}
                   value={value}
                   onBlur={onBlur}

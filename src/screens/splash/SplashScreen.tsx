@@ -1,17 +1,17 @@
 import {Screen, useNav} from '../../navigation/RootNavigation';
 import {Dimensions, KeyboardAvoidingView, ScrollView, View} from 'react-native';
 import React, {useEffect} from 'react';
-// import {KeyboardAvoidingView} from '../../components/rneui.tsx';
-import {useUser} from '@sezenta/react-native-connection';
 import LottieView from 'lottie-react-native';
+import {useSelector} from 'react-redux';
+import {RootState} from '../../utils/state/store';
 
 export const SplashScreen: Screen<'Splash'> = () => {
   const navigation = useNav();
-  const user = useUser();
+  const user = useSelector((state: RootState) => state.user.user);
 
   useEffect(() => {
-    if (user) {
-      navigation.navigate('Onboarding');
+    if (user.isSignedIn) {
+      navigation.navigate('Home');
     } else {
       navigation.navigate('Onboarding');
     }

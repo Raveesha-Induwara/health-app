@@ -10,6 +10,8 @@ import React from 'react';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import {Colors} from '../utils/Colors';
+import {useDispatch} from 'react-redux';
+import {increment} from '../utils/state/slices/counterSlice';
 
 interface ServiceCardProps {
   profilePic?: string;
@@ -22,9 +24,13 @@ interface ServiceCardProps {
 
 export const ServiceCard: React.FC<{item: ServiceCardProps}> = ({item}) => {
   const [isFavorite, setIsFavorite] = React.useState<boolean>(false);
+  const dispatch = useDispatch();
 
   return (
-    <TouchableNativeFeedback onPress={() => {}}>
+    <TouchableNativeFeedback
+      onPress={() => {
+        dispatch(increment());
+      }}>
       <View className="py-4 px-3 bg-white border border-gray rounded-md shadow-md">
         <View className="flex-row items-center justify-between">
           <View className="flex-row items-center gap-2">

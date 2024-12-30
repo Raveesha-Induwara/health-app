@@ -25,6 +25,9 @@ import {Image} from '@rneui/base';
 import {SearchBarComponent} from '../../components/Searchbar';
 import CategoryData from '../../data/categoryData';
 import LottieView from 'lottie-react-native';
+import {useDispatch, useSelector} from 'react-redux';
+import {RootState} from '../../utils/state/store';
+import { increment } from '../../utils/state/slices/counterSlice';
 
 // Get screen dimension
 const screenWidth = Dimensions.get('window').width;
@@ -42,7 +45,9 @@ export const HomeScreen = ({}) => {
   const [isLoading, setLoading] = useState<boolean>(true);
   const [doctorList, setDoctorList] = useState<Array<object>>([]);
   const [refreshing, setRefreshing] = useState<boolean>(false);
-  const [clickCount, setClickCount] = useState(0);
+  const count = useSelector((state: RootState) => state.counter.value);
+  const user = useSelector((state: RootState) => state.user.user);
+  const dispatch = useDispatch();
 
   //   Get service providers profile data from DB
   const fetchDoctors = useCallback(async () => {
@@ -93,7 +98,7 @@ export const HomeScreen = ({}) => {
         <TouchableOpacity
           className="items-center"
           onPress={() => {
-            // setCategory();
+            dispatch(increment());
           }}>
           <View
             style={styles.IconContainer}
@@ -161,7 +166,7 @@ export const HomeScreen = ({}) => {
                     Hi, Welcome Back,
                   </Text>
                   <Text className="text-lg font-medium text-white">
-                    Raveesha Induwara
+                    {user.name}
                   </Text>
                 </View>
               </View>
@@ -217,7 +222,7 @@ export const HomeScreen = ({}) => {
                 scrollEnabled={false}
                 showsHorizontalScrollIndicator={false}
                 data={CategoryData}
-                keyExtractor={(item: any) => item._id}
+                keyExtractor={(item: any) => item.id}
                 renderItem={_renderCategories}
               />
             </View>
@@ -242,15 +247,14 @@ export const HomeScreen = ({}) => {
         </ScrollView>
 
         {/* floating button */}
-        <TouchableOpacity
-          className="absolute z-10 bg-primary opacity-60 items-center justify-center rounded-full"
-          style={styles.buttonContainer}
-          onPress={() => {}}>
+        <View
+          className="absolute z-10 bg-primary opacity-70 items-center justify-center rounded-full"
+          style={styles.Container}>
           <View className="flex-row items-center">
             <MaterialIcons name="touch-app" size={25} color="#fff" />
-            <Text className="text-lg text-white">{clickCount}</Text>
+            <Text className="text-xl text-white">{count}</Text>
           </View>
-        </TouchableOpacity>
+        </View>
       </SafeAreaView>
     );
   }
@@ -267,7 +271,7 @@ const styles = StyleSheet.create({
     height: 60,
     borderRadius: 10,
   },
-  buttonContainer: {
+  Container: {
     width: 80,
     height: 60,
     bottom: 20,

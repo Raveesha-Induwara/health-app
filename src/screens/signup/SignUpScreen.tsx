@@ -7,7 +7,6 @@ import {
   Text,
   KeyboardAvoidingView,
   ScrollView,
-  Alert,
   TextInput,
   TouchableOpacity,
 } from 'react-native';
@@ -15,6 +14,8 @@ import {Button} from '../../components/rneui.tsx';
 import {Screen, useNav} from '../../navigation/RootNavigation.tsx';
 import {Colors} from '../../utils/Colors.ts';
 import {Controller, useForm} from 'react-hook-form';
+import {useDispatch} from 'react-redux';
+import {signUp} from '../../utils/state/slices/userSlice.ts';
 
 // Get screen dimension
 const screenWidth = Dimensions.get('window').width;
@@ -30,6 +31,7 @@ const RPH = (percentage: number) => {
 
 export const SignUpScreen: Screen<'SignUp'> = () => {
   const navigation = useNav();
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState<boolean>(false);
   const {
     control,
@@ -39,8 +41,14 @@ export const SignUpScreen: Screen<'SignUp'> = () => {
   } = useForm();
 
   const submit = (data: any) => {
-    Alert.alert('Form Data', JSON.stringify(data));
-    navigation.navigate('Home');
+    const user = {
+      name: data.firstName + ' ' + data.lastName,
+      email: data.email,
+      password: data.password,
+      isSignedIn: true,
+    };
+    dispatch(signUp(user));
+    navigation.navigate('SignIn');
   };
 
   return (
@@ -143,6 +151,7 @@ export const SignUpScreen: Screen<'SignUp'> = () => {
               render={({field: {onChange, onBlur, value}}) => (
                 <TextInput
                   placeholder="Enter your password"
+                  secureTextEntry={true}
                   style={styles.input}
                   value={value}
                   onBlur={onBlur}
@@ -169,6 +178,7 @@ export const SignUpScreen: Screen<'SignUp'> = () => {
               render={({field: {onChange, onBlur, value}}) => (
                 <TextInput
                   placeholder="Enter your confirm password"
+                  secureTextEntry={true}
                   style={styles.input}
                   value={value}
                   onBlur={onBlur}
