@@ -10,6 +10,7 @@ import {WelcomeScreen} from '../screens/welcome/WelcomeScreen';
 import {SignInScreen} from '../screens/signin/SignInScreen';
 import {SignUpScreen} from '../screens/signup/SignUpScreen';
 import {HomeScreen} from '../screens/home/HomeScreen';
+import {LoginSuccessScreen} from '../screens/signin/LoginSuccess';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -17,7 +18,7 @@ export const RootNavigator: React.FC = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Home"
+        initialRouteName="Splash"
         screenOptions={{
           headerShown: true,
           headerStyle: {
@@ -63,6 +64,13 @@ export const RootNavigator: React.FC = () => {
         <Stack.Screen
           name="SignUp"
           component={SignUpScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="LoginSuccess"
+          component={LoginSuccessScreen}
           options={{
             headerShown: false,
           }}

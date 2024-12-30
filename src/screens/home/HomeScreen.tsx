@@ -27,7 +27,7 @@ import CategoryData from '../../data/categoryData';
 import LottieView from 'lottie-react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../utils/state/store';
-import { increment } from '../../utils/state/slices/counterSlice';
+import {increment} from '../../utils/state/slices/counterSlice';
 
 // Get screen dimension
 const screenWidth = Dimensions.get('window').width;

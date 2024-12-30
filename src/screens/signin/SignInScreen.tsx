@@ -48,7 +48,6 @@ export const SignInScreen = () => {
   const submit = (data: SignInData) => {
     if (data.email === user.email && data.password === user.password) {
       Alert.alert('Success', 'You are logged in!');
-      navigation.navigate('Home');
     } else if (data.email !== user.email) {
       Alert.alert('Login Failed', 'User not found!');
     } else {
