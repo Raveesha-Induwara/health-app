@@ -7,6 +7,8 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {ButtonProps, createTheme, ThemeProvider} from '@rneui/themed';
 import {RootNavigator} from './src/navigation/RootNavigator';
 import {ConnectionProvider} from '@sezenta/react-native-connection';
+import {Provider} from 'react-redux';
+import {store} from './src/utils/state/store';
 
 export const FONT_FAMILY = 'Poppins';
 
@@ -33,9 +35,8 @@ const theme = createTheme({
       props: ButtonProps & {
         primary?: boolean;
         secondary?: boolean;
-        white?: boolean;
         error?: boolean;
-        secondaryTextColor?: string;
+        default?: boolean;
       },
       themeColor,
     ) => ({
@@ -43,28 +44,26 @@ const theme = createTheme({
         paddingHorizontal: 5,
         fontFamily: FONT_FAMILY,
         fontWeight: '500',
-        lineHeight: 25,
-        color: props.secondary
-          ? props.secondaryTextColor || themeColor.colors.white
-          : props.white
-          ? themeColor.colors.secondary
+        lineHeight: 30,
+        color: props.primary
+          ? themeColor.colors.white
+          : props.default
+          ? themeColor.colors.primary
           : props.error
           ? themeColor.colors.white
-          : themeColor.colors.white,
+          : themeColor.colors.primary,
         fontSize: props.size === 'sm' ? 14 : 18,
         marginTop: Platform.OS === 'ios' ? 3 : 0,
       },
       buttonStyle: {
         borderRadius: 5,
-        borderWidth: 1,
+        borderWidth: props.primary ? 0 : 1,
         borderColor: themeColor.colors.primary,
-        backgroundColor: props.secondary
-          ? themeColor.colors.secondary
+        backgroundColor: props.primary
+          ? themeColor.colors.primary
           : props.error
           ? themeColor.colors.error
-          : props.white
-          ? themeColor.colors.white
-          : themeColor.colors.primary,
+          : themeColor.colors.white,
       },
     }),
     ButtonGroup: {
@@ -166,11 +165,13 @@ function App(): React.JSX.Element {
       profile="default"
       userId={userIdProvider}
       logEnabled={LOG_NETWORK === 'true'}>
-      <ThemeProvider theme={theme}>
-        <SafeAreaProvider>
-          <RootNavigator />
-        </SafeAreaProvider>
-      </ThemeProvider>
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
+          <SafeAreaProvider>
+            <RootNavigator />
+          </SafeAreaProvider>
+        </ThemeProvider>
+      </Provider>
     </ConnectionProvider>
   );
 }
